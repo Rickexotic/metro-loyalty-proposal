@@ -11,7 +11,9 @@
     >
 
     <title>
+
         Club Metro | Outside Commercial Framework V2
+
     </title>
 
     <link rel="stylesheet" href="styles.css">
@@ -19,6 +21,73 @@
 </head>
 
 <body class="theme-light">
+
+    <!-- ==========================================
+         OPENING SEQUENCE
+    =========================================== -->
+
+    <div id="openingSequence">
+
+        <div class="search-container">
+
+            <div class="search-bar">
+
+                <svg
+                    class="search-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <circle
+                        cx="11"
+                        cy="11"
+                        r="7"
+                    ></circle>
+
+                    <path
+                        d="M20 20L17 17"
+                    ></path>
+
+                </svg>
+
+                <span id="typedText"></span>
+
+            </div>
+
+        </div>
+
+        <div id="logoReveal">
+
+            <img
+                id="logoLight"
+                src="assets/outside-logo-black.png"
+                alt="Outside"
+            >
+
+            <img
+                id="logoDark"
+                src="assets/outside-logo-white.png"
+                alt="Outside"
+            >
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         AUDIO
+    =========================================== -->
+
+    <audio
+        id="typingAudio"
+        preload="auto"
+    >
+
+        <source
+            src="assets/typing.m4a"
+            type="audio/mp4"
+        >
+
+    </audio>
 
     <!-- ==========================================
          SIDEBAR
@@ -31,7 +100,7 @@
         <button
             id="topButton"
             class="nav-button"
-            aria-label="Ir arriba"
+            aria-label="Top"
         >
 
             <svg
@@ -44,7 +113,7 @@
 
         </button>
 
-        <!-- PAGE NAVIGATION -->
+        <!-- PAGES -->
 
         <div class="sidebar-pages">
 
@@ -56,8 +125,6 @@
             </div>
 
             <div id="pageWindow">
-
-                <!-- JS -->
 
             </div>
 
@@ -75,7 +142,7 @@
         <button
             id="endButton"
             class="nav-button"
-            aria-label="Ir al final"
+            aria-label="End"
         >
 
             <svg
@@ -93,9 +160,19 @@
         <button
             id="themeToggle"
             class="theme-button"
-            aria-label="Cambiar tema"
+            aria-label="Theme"
         >
             ☾
+        </button>
+
+        <!-- AUDIO -->
+
+        <button
+            id="audioToggle"
+            class="theme-button"
+            aria-label="Audio"
+        >
+            🔇
         </button>
 
     </aside>
@@ -104,7 +181,7 @@
          PRESENTATION
     =========================================== -->
 
-    <main>
+    <main id="presentation">
 
         <!-- 01 -->
 
@@ -134,8 +211,8 @@
                     <p>
 
                         Una oportunidad para transformar
-                        millones de viajes en millones
-                        de relaciones.
+                        millones de viajes
+                        en millones de relaciones.
 
                     </p>
 
@@ -206,11 +283,8 @@
                     <p>
 
                         Compite por
-
                         <span class="highlight">
-
                             relevancia
-
                         </span>
 
                     </p>
@@ -218,11 +292,8 @@
                     <p>
 
                         Compite por
-
                         <span class="highlight">
-
                             experiencia
-
                         </span>
 
                     </p>
@@ -230,11 +301,8 @@
                     <p>
 
                         Compite por
-
                         <span class="highlight">
-
                             pertenencia
-
                         </span>
 
                     </p>
@@ -397,41 +465,12 @@
 
                     </div>
 
-                    <div class="ecosystem-node n1">
-
-                        Comercio
-
-                    </div>
-
-                    <div class="ecosystem-node n2">
-
-                        Cultura
-
-                    </div>
-
-                    <div class="ecosystem-node n3">
-
-                        Partners
-
-                    </div>
-
-                    <div class="ecosystem-node n4">
-
-                        Servicios
-
-                    </div>
-
-                    <div class="ecosystem-node n5">
-
-                        Movilidad
-
-                    </div>
-
-                    <div class="ecosystem-node n6">
-
-                        Experiencias
-
-                    </div>
+                    <div class="ecosystem-node n1">Comercio</div>
+                    <div class="ecosystem-node n2">Cultura</div>
+                    <div class="ecosystem-node n3">Partners</div>
+                    <div class="ecosystem-node n4">Servicios</div>
+                    <div class="ecosystem-node n5">Movilidad</div>
+                    <div class="ecosystem-node n6">Experiencias</div>
 
                 </div>
 
@@ -457,11 +496,8 @@
                 <div class="framework reveal">
 
                     <div>Discover</div>
-
                     <div>Design</div>
-
                     <div>Launch</div>
-
                     <div>Optimize</div>
 
                 </div>
@@ -488,11 +524,8 @@
                 <div class="roadmap reveal">
 
                     <div>Comprender</div>
-
                     <div>Diseñar</div>
-
                     <div>Validar</div>
-
                     <div>Escalar</div>
 
                 </div>
