@@ -1,14 +1,18 @@
 /* ==================================================
-   OUTSIDE COMMERCIAL FRAMEWORK V2
-   Navigation + Theme + Motion
+   OUTSIDE COMMERCIAL FRAMEWORK V2.1
    ================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const slides = [...document.querySelectorAll(".slide")];
-    const revealItems = document.querySelectorAll(".reveal");
+    const slides = [
+        ...document.querySelectorAll(".slide")
+    ];
 
-    const pageWindow = document.getElementById("pageWindow");
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
+    const pageWindow =
+        document.getElementById("pageWindow");
 
     const ellipsisTop =
         document.getElementById("pageEllipsisTop");
@@ -28,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSlide = 0;
 
     /* ==================================================
-       REVEAL ANIMATIONS
+       REVEAL
        ================================================== */
 
     const revealObserver =
@@ -56,14 +60,121 @@ document.addEventListener("DOMContentLoaded", () => {
 
         );
 
-    revealItems.forEach((item) => {
+    revealElements.forEach((element) => {
 
-        revealObserver.observe(item);
+        revealObserver.observe(element);
 
     });
 
     /* ==================================================
-       ACTIVE SLIDE DETECTION
+       SIDEBAR PAGINATION
+       ================================================== */
+
+    function renderSidebar() {
+
+        pageWindow.innerHTML = "";
+
+        const total =
+            slides.length;
+
+        let start =
+            Math.max(
+                0,
+                currentSlide - 2
+            );
+
+        let end =
+            Math.min(
+                total,
+                start + 5
+            );
+
+        if (
+            total > 5 &&
+            end - start < 5
+        ) {
+
+            start =
+                Math.max(
+                    0,
+                    end - 5
+                );
+
+        }
+
+        ellipsisTop.classList.toggle(
+
+            "hidden",
+
+            start === 0
+
+        );
+
+        ellipsisBottom.classList.toggle(
+
+            "hidden",
+
+            end >= total
+
+        );
+
+        for (
+            let i = start;
+            i < end;
+            i++
+        ) {
+
+            const page =
+                document.createElement("div");
+
+            page.className =
+                "page-number";
+
+            if (
+                i === currentSlide
+            ) {
+
+                page.classList.add(
+                    "active"
+                );
+
+            }
+
+            page.textContent =
+                String(i + 1)
+                .padStart(2, "0");
+
+            page.addEventListener(
+
+                "click",
+
+                () => {
+
+                    slides[i]
+                    .scrollIntoView({
+
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+
+                    });
+
+                }
+
+            );
+
+            pageWindow.appendChild(
+                page
+            );
+
+        }
+
+    }
+
+    /* ==================================================
+       ACTIVE SLIDE
        ================================================== */
 
     const slideObserver =
@@ -73,10 +184,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 entries.forEach((entry) => {
 
-                    if (!entry.isIntersecting) return;
+                    if (
+                        !entry.isIntersecting
+                    ) return;
 
                     currentSlide =
-                        slides.indexOf(entry.target);
+                        slides.indexOf(
+                            entry.target
+                        );
 
                     renderSidebar();
 
@@ -96,124 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    /* ==================================================
-       SIDEBAR PAGINATION
-       ================================================== */
-
-    function renderSidebar() {
-
-        pageWindow.innerHTML = "";
-
-        const totalSlides =
-            slides.length;
-
-        let start =
-            Math.max(
-                0,
-                currentSlide - 2
-            );
-
-        let end =
-            Math.min(
-                totalSlides,
-                start + 5
-            );
-
-        if (
-            end - start < 5 &&
-            totalSlides > 5
-        ) {
-
-            start =
-                Math.max(
-                    0,
-                    end - 5
-                );
-
-        }
-
-        if (start > 0) {
-
-            ellipsisTop.classList.remove(
-                "hidden"
-            );
-
-        } else {
-
-            ellipsisTop.classList.add(
-                "hidden"
-            );
-
-        }
-
-        if (
-            end < totalSlides
-        ) {
-
-            ellipsisBottom.classList.remove(
-                "hidden"
-            );
-
-        } else {
-
-            ellipsisBottom.classList.add(
-                "hidden"
-            );
-
-        }
-
-        for (
-            let i = start;
-            i < end;
-            i++
-        ) {
-
-            const page =
-                document.createElement("div");
-
-            page.className =
-                "page-number";
-
-            page.textContent =
-                String(i + 1)
-                    .padStart(2, "0");
-
-            if (
-                i === currentSlide
-            ) {
-
-                page.classList.add(
-                    "active"
-                );
-
-            }
-
-            page.addEventListener(
-                "click",
-                () => {
-
-                    slides[i]
-                        .scrollIntoView({
-
-                            behavior:
-                                "smooth",
-
-                            block:
-                                "start"
-
-                        });
-
-                }
-            );
-
-            pageWindow.appendChild(
-                page
-            );
-
-        }
-
-    }
-
     renderSidebar();
 
     /* ==================================================
@@ -221,7 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
        ================================================== */
 
     topButton.addEventListener(
+
         "click",
+
         () => {
 
             window.scrollTo({
@@ -234,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
+
     );
 
     /* ==================================================
@@ -241,7 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
        ================================================== */
 
     endButton.addEventListener(
+
         "click",
+
         () => {
 
             slides[
@@ -254,11 +256,27 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
+
     );
 
     /* ==================================================
-       LIGHT / DARK THEME
+       THEME
        ================================================== */
+
+    function updateThemeIcon() {
+
+        const darkMode =
+
+            document.body.classList.contains(
+                "theme-dark"
+            );
+
+        themeToggle.textContent =
+            darkMode
+            ? "☀"
+            : "☾";
+
+    }
 
     const savedTheme =
         localStorage.getItem(
@@ -278,11 +296,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    updateThemeIcon();
+
     themeToggle.addEventListener(
+
         "click",
+
         () => {
 
-            const darkActive =
+            const darkMode =
+
                 document.body.classList.contains(
                     "theme-dark"
                 );
@@ -299,20 +322,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 "outsideTheme",
 
-                darkActive
-                    ? "theme-light"
-                    : "theme-dark"
+                darkMode
+                ? "theme-light"
+                : "theme-dark"
+
             );
 
+            updateThemeIcon();
+
         }
+
     );
 
     /* ==================================================
-       KEYBOARD NAVIGATION
+       KEYBOARD
        ================================================== */
 
     document.addEventListener(
+
         "keydown",
+
         (event) => {
 
             if (
@@ -327,12 +356,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                 slides[next]
-                    .scrollIntoView({
+                .scrollIntoView({
 
-                        behavior:
-                            "smooth"
+                    behavior:
+                        "smooth"
 
-                    });
+                });
 
             }
 
@@ -348,18 +377,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                 slides[prev]
-                    .scrollIntoView({
+                .scrollIntoView({
 
-                        behavior:
-                            "smooth"
+                    behavior:
+                        "smooth"
 
-                    });
+                });
 
             }
 
             if (
-                event.key.toLowerCase()
-                === "home"
+                event.key === "Home"
             ) {
 
                 window.scrollTo({
@@ -374,8 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (
-                event.key.toLowerCase()
-                === "end"
+                event.key === "End"
             ) {
 
                 slides[
@@ -390,10 +417,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         }
+
     );
 
     /* ==================================================
-       PARALLAX HERO
+       HERO PARALLAX
        ================================================== */
 
     const heroTitles =
@@ -402,7 +430,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     window.addEventListener(
+
         "scroll",
+
         () => {
 
             const scroll =
@@ -413,18 +443,22 @@ document.addEventListener("DOMContentLoaded", () => {
             ) return;
 
             heroTitles.forEach(
+
                 (title, index) => {
 
                     const speed =
-                        (index + 1) * 0.04;
+                        0.03 +
+                        (index * 0.02);
 
                     title.style.transform =
                         `translateY(${scroll * speed}px)`;
 
                 }
+
             );
 
         }
+
     );
 
     /* ==================================================
@@ -440,11 +474,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         (node, index) => {
 
-            let direction = 1;
+            const duration =
+                3500 +
+                (index * 250);
+
+            let dir = 1;
 
             setInterval(() => {
 
-                direction *= -1;
+                dir *= -1;
 
                 node.animate(
 
@@ -452,27 +490,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         {
                             transform:
-                                `translateY(0px)`
+                                "translateY(0px)"
                         },
 
                         {
                             transform:
-                                `translateY(${direction * 8}px)`
+                                `translateY(${dir * 8}px)`
                         }
 
                     ],
 
                     {
 
-                        duration:
-                            3000 +
-                            (index * 250),
-
-                        fill:
-                            "forwards",
+                        duration,
 
                         easing:
-                            "ease-in-out"
+                            "ease-in-out",
+
+                        fill:
+                            "forwards"
 
                     }
 
@@ -480,8 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             },
 
-            3000 +
-            (index * 250)
+            duration
 
             );
 
@@ -490,26 +525,27 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     /* ==================================================
-       SMOOTH INITIAL LOAD
+       INITIAL LOAD
        ================================================== */
 
-    requestAnimationFrame(
-        () => {
+    requestAnimationFrame(() => {
 
-            document.body.classList.add(
-                "loaded"
-            );
+        document.body.classList.add(
+            "loaded"
+        );
 
-        }
-    );
+    });
 
     /* ==================================================
        DEBUG
        ================================================== */
 
     console.log(
-        "%cOutside Commercial Framework V2",
-        "color:#BFB2EA;font-size:14px;font-weight:bold;"
+
+        "%cOUTSIDE COMMERCIAL FRAMEWORK V2.1",
+
+        "color:#BFB2EA;font-weight:bold;font-size:13px;"
+
     );
 
 });
