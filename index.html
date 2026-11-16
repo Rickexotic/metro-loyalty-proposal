@@ -11,79 +11,135 @@
     >
 
     <title>
-        Club Metro | Propuesta Estratégica
+        Club Metro | Outside Commercial Framework V2
     </title>
 
     <link rel="stylesheet" href="styles.css">
 
 </head>
 
-<body>
+<body class="theme-light">
 
-    <!-- PROGRESS -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
-    <aside class="progress-nav">
+    <aside class="sidebar">
 
-        <div class="progress-line"></div>
+        <button
+            id="topButton"
+            class="nav-button"
+            aria-label="Ir arriba"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path d="M7 14L12 9L17 14" />
+                <path d="M7 20L12 15L17 20" />
+            </svg>
+        </button>
 
-        <div class="progress-dots">
+        <div class="sidebar-pages">
 
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+            <div
+                id="pageEllipsisTop"
+                class="ellipsis hidden"
+            >
+                ...
+            </div>
+
+            <div id="pageWindow">
+
+                <!-- Generado por JS -->
+
+            </div>
+
+            <div
+                id="pageEllipsisBottom"
+                class="ellipsis"
+            >
+                ...
+            </div>
 
         </div>
 
+        <button
+            id="endButton"
+            class="nav-button"
+            aria-label="Ir al final"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path d="M7 4L12 9L17 4" />
+                <path d="M7 10L12 15L17 10" />
+            </svg>
+        </button>
+
+        <button
+            id="themeToggle"
+            class="theme-button"
+            aria-label="Cambiar tema"
+        >
+
+            <span class="theme-sun">
+
+                ☀
+
+            </span>
+
+            <span class="theme-moon">
+
+                ☾
+
+            </span>
+
+        </button>
+
     </aside>
 
-    <!-- END BUTTON -->
-
-    <button
-        id="endButton"
-        class="end-button"
-    >
-        End
-    </button>
-
-    <!-- PRESENTATION -->
+    <!-- =========================
+         PRESENTATION
+    ========================== -->
 
     <main>
 
         <!-- 01 -->
 
-        <section class="slide hero">
+        <section
+            class="slide hero"
+            data-slide="01"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="eyebrow">
-                    OUTSIDE COMPANY
-                </span>
+                <div class="statement reveal">
 
-                <h1>
-                    Metro mueve millones
-                    de viajes.
-                </h1>
+                    <h1>
 
-                <h1 class="secondary">
-                    ¿Cómo transformarlos
-                    en relaciones?
-                </h1>
+                        La infraestructura
+                        ya existe.
 
-                <p class="hero-copy">
+                    </h1>
 
-                    Programa de Fidelización
-                    y Membresía para Metro.
+                    <h1 class="muted">
 
-                </p>
+                        La relación
+                        aún no.
+
+                    </h1>
+
+                    <p>
+
+                        Una oportunidad para transformar
+                        millones de viajes en millones
+                        de relaciones.
+
+                    </p>
+
+                </div>
 
             </div>
 
@@ -91,30 +147,51 @@
 
         <!-- 02 -->
 
-        <section class="slide">
+        <section
+            class="slide"
+            data-slide="02"
+        >
 
-            <div class="content narrow reveal">
+            <div class="content narrow">
 
-                <span class="section-tag">
+                <span class="section-label">
                     CONTEXTO
                 </span>
 
-                <h2>
-                    La movilidad ya no compite
-                    solamente por transporte.
-                </h2>
+                <div class="statement reveal">
 
-                <p>
-                    Compite por experiencia.
-                </p>
+                    <h2>
 
-                <p>
-                    Compite por relevancia.
-                </p>
+                        Metro mueve personas.
+                        Todos los días.
 
-                <p>
-                    Compite por pertenencia.
-                </p>
+                    </h2>
+
+                    <p>
+
+                        Frecuencia.
+
+                    </p>
+
+                    <p>
+
+                        Cobertura.
+
+                    </p>
+
+                    <p>
+
+                        Confianza.
+
+                    </p>
+
+                    <p>
+
+                        Presencia cotidiana.
+
+                    </p>
+
+                </div>
 
             </div>
 
@@ -122,40 +199,52 @@
 
         <!-- 03 -->
 
-        <section class="slide">
+        <section
+            class="slide"
+            data-slide="03"
+        >
 
-            <div class="content reveal">
+            <div class="content narrow">
 
-                <span class="section-tag">
-                    ACTIVO INVISIBLE
+                <span class="section-label">
+                    CAMBIO
                 </span>
 
-                <h2>
-                    Metro ya posee
-                    los activos estratégicos.
-                </h2>
+                <div class="statement reveal">
 
-                <div class="card-grid">
+                    <h2>
 
-                    <article class="card">
-                        <h3>Frecuencia</h3>
-                        <p>Contacto recurrente.</p>
-                    </article>
+                        La movilidad ya no compite
+                        solo por transporte.
 
-                    <article class="card">
-                        <h3>Datos</h3>
-                        <p>Información valiosa.</p>
-                    </article>
+                    </h2>
 
-                    <article class="card">
-                        <h3>Cobertura</h3>
-                        <p>Presencia territorial.</p>
-                    </article>
+                    <p>
 
-                    <article class="card">
-                        <h3>Marca</h3>
-                        <p>Confianza masiva.</p>
-                    </article>
+                        Compite por
+                        <span class="highlight">
+                            relevancia
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        Compite por
+                        <span class="highlight">
+                            experiencia
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        Compite por
+                        <span class="highlight">
+                            pertenencia
+                        </span>
+
+                    </p>
 
                 </div>
 
@@ -165,49 +254,37 @@
 
         <!-- 04 -->
 
-        <section class="slide">
+        <section
+            class="slide"
+            data-slide="04"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="section-tag">
-                    OPORTUNIDAD
+                <span class="section-label">
+                    PROBLEMA
                 </span>
 
-                <h2>
-                    De operador de transporte
-                    a plataforma urbana.
-                </h2>
+                <div class="split-layout reveal">
 
-                <div class="ecosystem">
+                    <div>
 
-                    <div class="center-circle">
+                        <h3>
 
-                        Club Metro
+                            Millones de viajes
+
+                        </h3>
 
                     </div>
 
-                    <div class="node n1">
-                        Comercio
-                    </div>
+                    <div>
 
-                    <div class="node n2">
-                        Cultura
-                    </div>
+                        <h3>
 
-                    <div class="node n3">
-                        Turismo
-                    </div>
+                            Pocas relaciones
 
-                    <div class="node n4">
-                        Servicios
-                    </div>
+                        </h3>
 
-                    <div class="node n5">
-                        Gastronomía
-                    </div>
-
-                    <div class="node n6">
-                        Banca
                     </div>
 
                 </div>
@@ -218,39 +295,40 @@
 
         <!-- 05 -->
 
-        <section class="slide">
+        <section
+            class="slide insight-slide"
+            data-slide="05"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="section-tag">
-                    BENCHMARK
-                </span>
+                <div class="statement reveal">
 
-                <h2>
-                    Ecosistemas que inspiran.
-                </h2>
+                    <span class="section-label">
 
-                <div class="benchmark-grid">
+                        INSIGHT
 
-                    <div class="benchmark">
-                        Heathrow Rewards
-                    </div>
+                    </span>
 
-                    <div class="benchmark">
-                        LATAM Pass
-                    </div>
+                    <h2>
 
-                    <div class="benchmark">
-                        Starbucks Rewards
-                    </div>
+                        La frecuencia
+                        tiene valor.
 
-                    <div class="benchmark">
-                        Extime Rewards
-                    </div>
+                    </h2>
 
-                    <div class="benchmark">
-                        Falabella CMR
-                    </div>
+                    <p>
+
+                        Metro ya posee la frecuencia.
+
+                    </p>
+
+                    <p>
+
+                        La oportunidad es
+                        capturar su valor.
+
+                    </p>
 
                 </div>
 
@@ -260,35 +338,39 @@
 
         <!-- 06 -->
 
-        <section class="slide">
+        <section
+            class="slide vision-slide"
+            data-slide="06"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="section-tag">
-                    INSIGHTS
-                </span>
+                <div class="statement reveal">
 
-                <h2>
-                    Lo que aprendimos.
-                </h2>
+                    <p>
 
-                <div class="insights">
+                        Metro puede evolucionar desde
 
-                    <div class="insight">
-                        Los descuentos no generan lealtad.
-                    </div>
+                    </p>
 
-                    <div class="insight">
-                        La experiencia sí.
-                    </div>
+                    <h2>
 
-                    <div class="insight">
-                        La personalización aumenta frecuencia.
-                    </div>
+                        Operador de Transporte
 
-                    <div class="insight">
-                        Los ecosistemas crean valor sostenible.
-                    </div>
+                    </h2>
+
+                    <p>
+
+                        hacia
+
+                    </p>
+
+                    <h2>
+
+                        Plataforma de
+                        Relacionamiento Urbano
+
+                    </h2>
 
                 </div>
 
@@ -298,33 +380,64 @@
 
         <!-- 07 -->
 
-        <section class="slide statement">
+        <section
+            class="slide"
+            data-slide="07"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <p class="mega-line">
+                <span class="section-label">
 
-                    Metro puede evolucionar desde
+                    VISIÓN
 
-                </p>
+                </span>
 
-                <h2>
+                <div class="ecosystem reveal">
 
-                    Operador de Transporte
+                    <div class="ecosystem-center">
 
-                </h2>
+                        Usuario Metro
 
-                <p class="mega-line">
+                    </div>
 
-                    hacia
+                    <div class="ecosystem-node n1">
 
-                </p>
+                        Comercio
 
-                <h2>
+                    </div>
 
-                    Plataforma de Relacionamiento Urbano
+                    <div class="ecosystem-node n2">
 
-                </h2>
+                        Cultura
+
+                    </div>
+
+                    <div class="ecosystem-node n3">
+
+                        Partners
+
+                    </div>
+
+                    <div class="ecosystem-node n4">
+
+                        Servicios
+
+                    </div>
+
+                    <div class="ecosystem-node n5">
+
+                        Movilidad
+
+                    </div>
+
+                    <div class="ecosystem-node n6">
+
+                        Experiencias
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -332,24 +445,44 @@
 
         <!-- 08 -->
 
-        <section class="slide">
+        <section
+            class="slide"
+            data-slide="08"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="section-tag">
+                <span class="section-label">
+
                     FRAMEWORK OUTSIDE
+
                 </span>
 
-                <h2>
-                    Cómo lo construiríamos.
-                </h2>
+                <div class="framework reveal">
 
-                <div class="framework">
+                    <div>
 
-                    <div>Discover</div>
-                    <div>Design</div>
-                    <div>Launch</div>
-                    <div>Optimize</div>
+                        Discover
+
+                    </div>
+
+                    <div>
+
+                        Design
+
+                    </div>
+
+                    <div>
+
+                        Launch
+
+                    </div>
+
+                    <div>
+
+                        Optimize
+
+                    </div>
 
                 </div>
 
@@ -359,26 +492,44 @@
 
         <!-- 09 -->
 
-        <section class="slide">
+        <section
+            class="slide"
+            data-slide="09"
+        >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <span class="section-tag">
-                    ECOSISTEMA
+                <span class="section-label">
+
+                    ROADMAP
+
                 </span>
 
-                <h2>
-                    El usuario al centro.
-                </h2>
+                <div class="roadmap reveal">
 
-                <div class="user-ecosystem">
+                    <div>
 
-                    <div>Usuario Metro</div>
-                    <div>Partners</div>
-                    <div>Servicios</div>
-                    <div>Comercios</div>
-                    <div>Cultura</div>
-                    <div>Experiencias</div>
+                        Comprender
+
+                    </div>
+
+                    <div>
+
+                        Diseñar
+
+                    </div>
+
+                    <div>
+
+                        Validar
+
+                    </div>
+
+                    <div>
+
+                        Escalar
+
+                    </div>
 
                 </div>
 
@@ -388,88 +539,39 @@
 
         <!-- 10 -->
 
-        <section class="slide">
-
-            <div class="content reveal">
-
-                <span class="section-tag">
-                    ROADMAP
-                </span>
-
-                <h2>
-                    Hoja de ruta.
-                </h2>
-
-                <div class="roadmap">
-
-                    <div>Discovery</div>
-                    <div>Diseño</div>
-                    <div>Piloto</div>
-                    <div>Escalamiento</div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- 11 -->
-
-        <section class="slide">
-
-            <div class="content reveal">
-
-                <span class="section-tag">
-                    CAPACIDADES
-                </span>
-
-                <h2>
-                    El equipo necesario.
-                </h2>
-
-                <div class="team-grid">
-
-                    <div>Estrategia</div>
-                    <div>Loyalty</div>
-                    <div>Customer Experience</div>
-                    <div>Analytics</div>
-                    <div>Growth</div>
-                    <div>Diseño Digital</div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- 12 -->
-
         <section
-            id="closing"
             class="slide closing"
+            id="closing"
+            data-slide="10"
         >
 
-            <div class="content reveal">
+            <div class="content">
 
-                <h2>
+                <div class="statement reveal">
 
-                    La infraestructura
-                    ya existe.
+                    <h2>
 
-                </h2>
+                        Los viajes
+                        ya existen.
 
-                <h2>
+                    </h2>
 
-                    La relación
-                    está por construirse.
+                    <h2 class="muted">
 
-                </h2>
+                        La oportunidad
+                        es construir
+                        la relación.
 
-                <p>
+                    </h2>
 
-                    Let's Build Club Metro
+                    <p>
 
-                </p>
+                        Let's build
+                        Club Metro.
+
+                    </p>
+
+                </div>
 
             </div>
 
