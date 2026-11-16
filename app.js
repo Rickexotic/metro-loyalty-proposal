@@ -1,8 +1,12 @@
 /* ==================================================
-   OUTSIDE COMMERCIAL FRAMEWORK V2.1
+   OUTSIDE COMMERCIAL FRAMEWORK V2.2
    ================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* ==================================================
+       ELEMENTS
+       ================================================== */
 
     const slides = [
         ...document.querySelectorAll(".slide")
@@ -29,234 +33,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeToggle =
         document.getElementById("themeToggle");
 
+    const audioToggle =
+        document.getElementById("audioToggle");
+
+    const openingSequence =
+        document.getElementById("openingSequence");
+
+    const typedText =
+        document.getElementById("typedText");
+
+    const logoReveal =
+        document.getElementById("logoReveal");
+
+    const typingAudio =
+        document.getElementById("typingAudio");
+
     let currentSlide = 0;
 
-    /* ==================================================
-       REVEAL
-       ================================================== */
-
-    const revealObserver =
-        new IntersectionObserver(
-
-            (entries) => {
-
-                entries.forEach((entry) => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-                    }
-
-                });
-
-            },
-
-            {
-                threshold: 0.15
-            }
-
-        );
-
-    revealElements.forEach((element) => {
-
-        revealObserver.observe(element);
-
-    });
+    let soundEnabled = false;
 
     /* ==================================================
-       SIDEBAR PAGINATION
+       AUDIO
        ================================================== */
 
-    function renderSidebar() {
+    function updateAudioIcon() {
 
-        pageWindow.innerHTML = "";
-
-        const total =
-            slides.length;
-
-        let start =
-            Math.max(
-                0,
-                currentSlide - 2
-            );
-
-        let end =
-            Math.min(
-                total,
-                start + 5
-            );
-
-        if (
-            total > 5 &&
-            end - start < 5
-        ) {
-
-            start =
-                Math.max(
-                    0,
-                    end - 5
-                );
-
-        }
-
-        ellipsisTop.classList.toggle(
-
-            "hidden",
-
-            start === 0
-
-        );
-
-        ellipsisBottom.classList.toggle(
-
-            "hidden",
-
-            end >= total
-
-        );
-
-        for (
-            let i = start;
-            i < end;
-            i++
-        ) {
-
-            const page =
-                document.createElement("div");
-
-            page.className =
-                "page-number";
-
-            if (
-                i === currentSlide
-            ) {
-
-                page.classList.add(
-                    "active"
-                );
-
-            }
-
-            page.textContent =
-                String(i + 1)
-                .padStart(2, "0");
-
-            page.addEventListener(
-
-                "click",
-
-                () => {
-
-                    slides[i]
-                    .scrollIntoView({
-
-                        behavior:
-                            "smooth",
-
-                        block:
-                            "start"
-
-                    });
-
-                }
-
-            );
-
-            pageWindow.appendChild(
-                page
-            );
-
-        }
+        audioToggle.textContent =
+            soundEnabled
+                ? "🔊"
+                : "🔇";
 
     }
 
-    /* ==================================================
-       ACTIVE SLIDE
-       ================================================== */
+    updateAudioIcon();
 
-    const slideObserver =
-        new IntersectionObserver(
-
-            (entries) => {
-
-                entries.forEach((entry) => {
-
-                    if (
-                        !entry.isIntersecting
-                    ) return;
-
-                    currentSlide =
-                        slides.indexOf(
-                            entry.target
-                        );
-
-                    renderSidebar();
-
-                });
-
-            },
-
-            {
-                threshold: 0.55
-            }
-
-        );
-
-    slides.forEach((slide) => {
-
-        slideObserver.observe(slide);
-
-    });
-
-    renderSidebar();
-
-    /* ==================================================
-       TOP BUTTON
-       ================================================== */
-
-    topButton.addEventListener(
-
+    audioToggle.addEventListener(
         "click",
-
         () => {
 
-            window.scrollTo({
+            soundEnabled =
+                !soundEnabled;
 
-                top: 0,
-
-                behavior:
-                    "smooth"
-
-            });
+            updateAudioIcon();
 
         }
-
-    );
-
-    /* ==================================================
-       END BUTTON
-       ================================================== */
-
-    endButton.addEventListener(
-
-        "click",
-
-        () => {
-
-            slides[
-                slides.length - 1
-            ].scrollIntoView({
-
-                behavior:
-                    "smooth"
-
-            });
-
-        }
-
     );
 
     /* ==================================================
@@ -265,16 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateThemeIcon() {
 
-        const darkMode =
-
+        const isDark =
             document.body.classList.contains(
                 "theme-dark"
             );
 
         themeToggle.textContent =
-            darkMode
-            ? "☀"
-            : "☾";
+            isDark
+                ? "☀"
+                : "☾";
 
     }
 
@@ -299,13 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
     updateThemeIcon();
 
     themeToggle.addEventListener(
-
         "click",
-
         () => {
 
-            const darkMode =
-
+            const isDark =
                 document.body.classList.contains(
                     "theme-dark"
                 );
@@ -319,16 +135,334 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             localStorage.setItem(
-
                 "outsideTheme",
-
-                darkMode
-                ? "theme-light"
-                : "theme-dark"
-
+                isDark
+                    ? "theme-light"
+                    : "theme-dark"
             );
 
             updateThemeIcon();
+
+        }
+    );
+
+    /* ==================================================
+       OPENING SEQUENCE
+       ================================================== */
+
+    async function runOpeningSequence() {
+
+        document.body.style.overflow =
+            "hidden";
+
+        typedText.textContent = "";
+
+        const text =
+            "Outside Co.";
+
+        if (soundEnabled) {
+
+            try {
+
+                typingAudio.currentTime =
+                    0;
+
+                await typingAudio.play();
+
+            } catch (error) {}
+
+        }
+
+        for (
+            let i = 0;
+            i < text.length;
+            i++
+        ) {
+
+            typedText.textContent +=
+                text[i];
+
+            await delay(120);
+
+        }
+
+        await delay(600);
+
+        document.querySelector(
+            ".search-container"
+        ).style.opacity = 0;
+
+        document.querySelector(
+            ".search-container"
+        ).style.transform =
+            "scale(.9)";
+
+        await delay(900);
+
+        logoReveal.classList.add(
+            "visible"
+        );
+
+        await delay(2200);
+
+        openingSequence.classList.add(
+            "hidden"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+    function delay(ms) {
+
+        return new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    ms
+                )
+        );
+
+    }
+
+    setTimeout(() => {
+
+        runOpeningSequence();
+
+    }, 400);
+
+    /* ==================================================
+       REVEAL
+       ================================================== */
+
+    const revealObserver =
+        new IntersectionObserver(
+
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+
+            {
+                threshold: 0.15
+            }
+
+        );
+
+    revealElements.forEach(
+
+        element => {
+
+            revealObserver.observe(
+                element
+            );
+
+        }
+
+    );
+
+    /* ==================================================
+       SIDEBAR
+       ================================================== */
+
+    function renderSidebar() {
+
+        pageWindow.innerHTML = "";
+
+        const total =
+            slides.length;
+
+        let start =
+            Math.max(
+                0,
+                currentSlide - 2
+            );
+
+        let end =
+            Math.min(
+                total,
+                start + 5
+            );
+
+        if (
+            total > 5 &&
+            (end - start) < 5
+        ) {
+
+            start =
+                Math.max(
+                    0,
+                    end - 5
+                );
+
+        }
+
+        ellipsisTop.classList.toggle(
+            "hidden",
+            start === 0
+        );
+
+        ellipsisBottom.classList.toggle(
+            "hidden",
+            end >= total
+        );
+
+        for (
+            let i = start;
+            i < end;
+            i++
+        ) {
+
+            const page =
+                document.createElement(
+                    "div"
+                );
+
+            page.className =
+                "page-number";
+
+            if (
+                i === currentSlide
+            ) {
+
+                page.classList.add(
+                    "active"
+                );
+
+            }
+
+            page.textContent =
+                String(i + 1)
+                .padStart(2, "0");
+
+            page.addEventListener(
+                "click",
+                () => {
+
+                    slides[i]
+                    .scrollIntoView({
+
+                        behavior:
+                            "smooth"
+
+                    });
+
+                }
+            );
+
+            pageWindow.appendChild(
+                page
+            );
+
+        }
+
+    }
+
+    /* ==================================================
+       ACTIVE SLIDE
+       ================================================== */
+
+    const slideObserver =
+        new IntersectionObserver(
+
+            (entries) => {
+
+                entries.forEach(
+                    (entry) => {
+
+                        if (
+                            !entry.isIntersecting
+                        ) return;
+
+                        currentSlide =
+                            slides.indexOf(
+                                entry.target
+                            );
+
+                        renderSidebar();
+
+                    }
+                );
+
+            },
+
+            {
+                threshold: 0.55
+            }
+
+        );
+
+    slides.forEach(
+
+        slide => {
+
+            slideObserver.observe(
+                slide
+            );
+
+        }
+
+    );
+
+    renderSidebar();
+
+    /* ==================================================
+       TOP
+       ================================================== */
+
+    topButton.addEventListener(
+
+        "click",
+
+        () => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+
+    );
+
+    /* ==================================================
+       END
+       ================================================== */
+
+    endButton.addEventListener(
+
+        "click",
+
+        () => {
+
+            slides[
+                slides.length - 1
+            ].scrollIntoView({
+
+                behavior:
+                    "smooth"
+
+            });
 
         }
 
@@ -342,21 +476,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         "keydown",
 
-        (event) => {
+        event => {
 
             if (
                 event.key ===
                 "ArrowDown"
             ) {
 
-                const next =
+                slides[
                     Math.min(
                         currentSlide + 1,
                         slides.length - 1
-                    );
-
-                slides[next]
-                .scrollIntoView({
+                    )
+                ].scrollIntoView({
 
                     behavior:
                         "smooth"
@@ -370,43 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "ArrowUp"
             ) {
 
-                const prev =
+                slides[
                     Math.max(
                         currentSlide - 1,
                         0
-                    );
-
-                slides[prev]
-                .scrollIntoView({
-
-                    behavior:
-                        "smooth"
-
-                });
-
-            }
-
-            if (
-                event.key === "Home"
-            ) {
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior:
-                        "smooth"
-
-                });
-
-            }
-
-            if (
-                event.key === "End"
-            ) {
-
-                slides[
-                    slides.length - 1
+                    )
                 ].scrollIntoView({
 
                     behavior:
@@ -430,9 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     window.addEventListener(
-
         "scroll",
-
         () => {
 
             const scroll =
@@ -443,22 +541,19 @@ document.addEventListener("DOMContentLoaded", () => {
             ) return;
 
             heroTitles.forEach(
-
                 (title, index) => {
 
                     const speed =
-                        0.03 +
+                        0.04 +
                         (index * 0.02);
 
                     title.style.transform =
                         `translateY(${scroll * speed}px)`;
 
                 }
-
             );
 
         }
-
     );
 
     /* ==================================================
@@ -471,37 +566,32 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     nodes.forEach(
-
         (node, index) => {
 
             const duration =
                 3500 +
                 (index * 250);
 
-            let dir = 1;
+            let direction = 1;
 
             setInterval(() => {
 
-                dir *= -1;
+                direction *= -1;
 
                 node.animate(
 
                     [
-
                         {
                             transform:
-                                "translateY(0px)"
+                                "translateY(0)"
                         },
-
                         {
                             transform:
-                                `translateY(${dir * 8}px)`
+                                `translateY(${direction * 8}px)`
                         }
-
                     ],
 
                     {
-
                         duration,
 
                         easing:
@@ -509,43 +599,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         fill:
                             "forwards"
-
                     }
 
                 );
 
-            },
-
-            duration
-
-            );
+            }, duration);
 
         }
-
     );
 
-    /* ==================================================
-       INITIAL LOAD
-       ================================================== */
-
-    requestAnimationFrame(() => {
-
-        document.body.classList.add(
-            "loaded"
-        );
-
-    });
-
-    /* ==================================================
-       DEBUG
-       ================================================== */
-
     console.log(
-
-        "%cOUTSIDE COMMERCIAL FRAMEWORK V2.1",
-
-        "color:#BFB2EA;font-weight:bold;font-size:13px;"
-
+        "%cOUTSIDE COMMERCIAL FRAMEWORK V2.2",
+        "color:#BFB2EA;font-weight:bold;"
     );
 
 });
