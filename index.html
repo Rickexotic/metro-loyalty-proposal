@@ -11,9 +11,7 @@
     >
 
     <title>
-
-        Club Metro | Outside Commercial Framework V2
-
+        Club Metro | Outside Commercial Framework V2.3
     </title>
 
     <link rel="stylesheet" href="styles.css">
@@ -28,7 +26,7 @@
 
     <div id="openingSequence">
 
-        <div class="search-container">
+        <div class="search-stage">
 
             <div class="search-bar">
 
@@ -52,6 +50,16 @@
                 <span id="typedText"></span>
 
             </div>
+
+            <button
+                id="audioToggleIntro"
+                class="intro-audio-button"
+                aria-label="Audio"
+            >
+
+                🔇
+
+            </button>
 
         </div>
 
@@ -93,14 +101,17 @@
          SIDEBAR
     =========================================== -->
 
-    <aside class="sidebar">
+    <aside
+        id="sidebar"
+        class="sidebar hidden-sidebar"
+    >
 
         <!-- TOP -->
 
         <button
             id="topButton"
             class="nav-button"
-            aria-label="Top"
+            aria-label="Ir arriba"
         >
 
             <svg
@@ -113,7 +124,7 @@
 
         </button>
 
-        <!-- PAGES -->
+        <!-- PAGINATION -->
 
         <div class="sidebar-pages">
 
@@ -125,6 +136,8 @@
             </div>
 
             <div id="pageWindow">
+
+                <!-- JS -->
 
             </div>
 
@@ -142,7 +155,7 @@
         <button
             id="endButton"
             class="nav-button"
-            aria-label="End"
+            aria-label="Ir al final"
         >
 
             <svg
@@ -160,7 +173,7 @@
         <button
             id="themeToggle"
             class="theme-button"
-            aria-label="Theme"
+            aria-label="Cambiar tema"
         >
             ☾
         </button>
@@ -232,7 +245,9 @@
             <div class="content narrow">
 
                 <span class="section-label">
+
                     CONTEXTO
+
                 </span>
 
                 <div class="statement reveal">
@@ -268,7 +283,9 @@
             <div class="content narrow">
 
                 <span class="section-label">
+
                     CAMBIO
+
                 </span>
 
                 <div class="statement reveal">
@@ -323,7 +340,9 @@
             <div class="content">
 
                 <span class="section-label">
+
                     PROBLEMA
+
                 </span>
 
                 <div class="split-layout reveal">
@@ -460,17 +479,32 @@
                 <div class="ecosystem reveal">
 
                     <div class="ecosystem-center">
-
                         Usuario Metro
-
                     </div>
 
-                    <div class="ecosystem-node n1">Comercio</div>
-                    <div class="ecosystem-node n2">Cultura</div>
-                    <div class="ecosystem-node n3">Partners</div>
-                    <div class="ecosystem-node n4">Servicios</div>
-                    <div class="ecosystem-node n5">Movilidad</div>
-                    <div class="ecosystem-node n6">Experiencias</div>
+                    <div class="ecosystem-node n1">
+                        Comercio
+                    </div>
+
+                    <div class="ecosystem-node n2">
+                        Cultura
+                    </div>
+
+                    <div class="ecosystem-node n3">
+                        Partners
+                    </div>
+
+                    <div class="ecosystem-node n4">
+                        Servicios
+                    </div>
+
+                    <div class="ecosystem-node n5">
+                        Movilidad
+                    </div>
+
+                    <div class="ecosystem-node n6">
+                        Experiencias
+                    </div>
 
                 </div>
 
@@ -496,8 +530,11 @@
                 <div class="framework reveal">
 
                     <div>Discover</div>
+
                     <div>Design</div>
+
                     <div>Launch</div>
+
                     <div>Optimize</div>
 
                 </div>
@@ -524,8 +561,11 @@
                 <div class="roadmap reveal">
 
                     <div>Comprender</div>
+
                     <div>Diseñar</div>
+
                     <div>Validar</div>
+
                     <div>Escalar</div>
 
                 </div>
@@ -563,8 +603,7 @@
 
                     <p>
 
-                        Let's build
-                        Club Metro.
+                        Let's build Club Metro.
 
                     </p>
 
