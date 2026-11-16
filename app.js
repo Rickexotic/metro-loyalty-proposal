@@ -1,5 +1,5 @@
 /* ==================================================
-   OUTSIDE COMMERCIAL FRAMEWORK V2.2
+   OUTSIDE COMMERCIAL FRAMEWORK V2.3
    ================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const ellipsisBottom =
         document.getElementById("pageEllipsisBottom");
 
+    const sidebar =
+        document.getElementById("sidebar");
+
     const topButton =
         document.getElementById("topButton");
 
@@ -36,8 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const audioToggle =
         document.getElementById("audioToggle");
 
+    const audioToggleIntro =
+        document.getElementById("audioToggleIntro");
+
     const openingSequence =
         document.getElementById("openingSequence");
+
+    const searchStage =
+        document.querySelector(".search-stage");
 
     const typedText =
         document.getElementById("typedText");
@@ -50,33 +59,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentSlide = 0;
 
-    let soundEnabled = false;
-
     /* ==================================================
        AUDIO
        ================================================== */
 
-    function updateAudioIcon() {
+    let soundEnabled =
+        localStorage.getItem("outsideAudio") === "true";
 
-        audioToggle.textContent =
+    function updateAudioButtons() {
+
+        const icon =
             soundEnabled
                 ? "🔊"
                 : "🔇";
 
+        if (audioToggle)
+            audioToggle.textContent = icon;
+
+        if (audioToggleIntro)
+            audioToggleIntro.textContent = icon;
+
     }
 
-    updateAudioIcon();
+    updateAudioButtons();
 
-    audioToggle.addEventListener(
+    function toggleAudio() {
+
+        soundEnabled =
+            !soundEnabled;
+
+        localStorage.setItem(
+            "outsideAudio",
+            soundEnabled
+        );
+
+        updateAudioButtons();
+
+    }
+
+    audioToggle?.addEventListener(
         "click",
-        () => {
+        toggleAudio
+    );
 
-            soundEnabled =
-                !soundEnabled;
-
-            updateAudioIcon();
-
-        }
+    audioToggleIntro?.addEventListener(
+        "click",
+        toggleAudio
     );
 
     /* ==================================================
@@ -135,16 +163,32 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             localStorage.setItem(
+
                 "outsideTheme",
+
                 isDark
                     ? "theme-light"
                     : "theme-dark"
+
             );
 
             updateThemeIcon();
 
         }
     );
+
+    /* ==================================================
+       UTILS
+       ================================================== */
+
+    function delay(ms) {
+
+        return new Promise(
+            resolve =>
+                setTimeout(resolve, ms)
+        );
+
+    }
 
     /* ==================================================
        OPENING SEQUENCE
@@ -164,14 +208,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
 
-                typingAudio.currentTime =
-                    0;
+                typingAudio.currentTime = 0;
 
-                await typingAudio.play();
+                typingAudio.volume = 0.4;
+
+                typingAudio.play();
 
             } catch (error) {}
 
         }
+
+        /* typing */
 
         for (
             let i = 0;
@@ -182,31 +229,42 @@ document.addEventListener("DOMContentLoaded", () => {
             typedText.textContent +=
                 text[i];
 
-            await delay(120);
+            await delay(75);
 
         }
 
-        await delay(600);
+        /* pausa */
 
-        document.querySelector(
-            ".search-container"
-        ).style.opacity = 0;
+        await delay(250);
 
-        document.querySelector(
-            ".search-container"
-        ).style.transform =
-            "scale(.9)";
+        /* search out */
 
-        await delay(900);
+        searchStage.classList.add(
+            "fade-out"
+        );
+
+        await delay(300);
+
+        /* logo in */
 
         logoReveal.classList.add(
             "visible"
         );
 
-        await delay(2200);
+        await delay(550);
+
+        logoReveal.classList.add(
+            "zoom"
+        );
+
+        await delay(650);
 
         openingSequence.classList.add(
             "hidden"
+        );
+
+        sidebar.classList.remove(
+            "hidden-sidebar"
         );
 
         document.body.style.overflow =
@@ -214,23 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    function delay(ms) {
-
-        return new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    ms
-                )
-        );
-
-    }
-
-    setTimeout(() => {
-
-        runOpeningSequence();
-
-    }, 400);
+    runOpeningSequence();
 
     /* ==================================================
        REVEAL
@@ -239,10 +281,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const revealObserver =
         new IntersectionObserver(
 
-            (entries) => {
+            entries => {
 
                 entries.forEach(
-                    (entry) => {
+                    entry => {
 
                         if (
                             entry.isIntersecting
@@ -266,19 +308,14 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     revealElements.forEach(
-
-        element => {
-
+        item =>
             revealObserver.observe(
-                element
-            );
-
-        }
-
+                item
+            )
     );
 
     /* ==================================================
-       SIDEBAR
+       SIDEBAR PAGINATION
        ================================================== */
 
     function renderSidebar() {
@@ -302,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (
             total > 5 &&
-            (end - start) < 5
+            end - start < 5
         ) {
 
             start =
@@ -381,10 +418,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const slideObserver =
         new IntersectionObserver(
 
-            (entries) => {
+            entries => {
 
                 entries.forEach(
-                    (entry) => {
+                    entry => {
 
                         if (
                             !entry.isIntersecting
@@ -409,15 +446,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     slides.forEach(
-
-        slide => {
-
+        slide =>
             slideObserver.observe(
                 slide
-            );
-
-        }
-
+            )
     );
 
     renderSidebar();
@@ -427,9 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
        ================================================== */
 
     topButton.addEventListener(
-
         "click",
-
         () => {
 
             window.scrollTo({
@@ -442,7 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
-
     );
 
     /* ==================================================
@@ -450,9 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
        ================================================== */
 
     endButton.addEventListener(
-
         "click",
-
         () => {
 
             slides[
@@ -465,7 +492,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
-
     );
 
     /* ==================================================
@@ -473,9 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
        ================================================== */
 
     document.addEventListener(
-
         "keydown",
-
         event => {
 
             if (
@@ -517,7 +541,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
         }
-
     );
 
     /* ==================================================
@@ -544,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 (title, index) => {
 
                     const speed =
-                        0.04 +
+                        0.03 +
                         (index * 0.02);
 
                     title.style.transform =
@@ -569,8 +592,8 @@ document.addEventListener("DOMContentLoaded", () => {
         (node, index) => {
 
             const duration =
-                3500 +
-                (index * 250);
+                3200 +
+                (index * 220);
 
             let direction = 1;
 
@@ -583,7 +606,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     [
                         {
                             transform:
-                                "translateY(0)"
+                                "translateY(0px)"
                         },
                         {
                             transform:
@@ -593,24 +616,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     {
                         duration,
-
                         easing:
                             "ease-in-out",
-
                         fill:
                             "forwards"
                     }
 
                 );
 
-            }, duration);
+            },
+
+            duration
+
+            );
 
         }
     );
 
     console.log(
-        "%cOUTSIDE COMMERCIAL FRAMEWORK V2.2",
-        "color:#BFB2EA;font-weight:bold;"
+        "%cOUTSIDE COMMERCIAL FRAMEWORK V2.3",
+        "color:#BFB2EA;font-size:13px;font-weight:bold;"
     );
 
 });
