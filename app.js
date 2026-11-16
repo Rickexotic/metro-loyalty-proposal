@@ -1,95 +1,94 @@
-/* ==========================================
-   OUTSIDE COMMERCIAL FRAMEWORK V1
-   Metro Loyalty Proposal
-   ========================================== */
+/* ==================================================
+   OUTSIDE COMMERCIAL FRAMEWORK V2
+   Navigation + Theme + Motion
+   ================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeRevealAnimations();
-    initializeProgressBar();
-    initializeEndButton();
-    initializeParallaxEffects();
+    const slides = [...document.querySelectorAll(".slide")];
+    const revealItems = document.querySelectorAll(".reveal");
 
-});
+    const pageWindow = document.getElementById("pageWindow");
 
-/* ==========================================
-   REVEAL ANIMATIONS
-   ========================================== */
+    const ellipsisTop =
+        document.getElementById("pageEllipsisTop");
 
-function initializeRevealAnimations() {
+    const ellipsisBottom =
+        document.getElementById("pageEllipsisBottom");
 
-    const elements = document.querySelectorAll(".reveal");
+    const topButton =
+        document.getElementById("topButton");
 
-    const observer = new IntersectionObserver(
+    const endButton =
+        document.getElementById("endButton");
 
-        (entries) => {
+    const themeToggle =
+        document.getElementById("themeToggle");
 
-            entries.forEach((entry) => {
+    let currentSlide = 0;
 
-                if (entry.isIntersecting) {
+    /* ==================================================
+       REVEAL ANIMATIONS
+       ================================================== */
 
-                    entry.target.classList.add("visible");
+    const revealObserver =
+        new IntersectionObserver(
 
-                }
+            (entries) => {
 
-            });
+                entries.forEach((entry) => {
 
-        },
+                    if (entry.isIntersecting) {
 
-        {
-            threshold: 0.20
-        }
+                        entry.target.classList.add(
+                            "visible"
+                        );
 
-    );
+                    }
 
-    elements.forEach((element) => {
+                });
 
-        observer.observe(element);
+            },
+
+            {
+                threshold: 0.15
+            }
+
+        );
+
+    revealItems.forEach((item) => {
+
+        revealObserver.observe(item);
 
     });
 
-}
+    /* ==================================================
+       ACTIVE SLIDE DETECTION
+       ================================================== */
 
-/* ==========================================
-   PROGRESS BAR
-   ========================================== */
+    const slideObserver =
+        new IntersectionObserver(
 
-function initializeProgressBar() {
+            (entries) => {
 
-    const slides = document.querySelectorAll(".slide");
-    const dots = document.querySelectorAll(".dot");
+                entries.forEach((entry) => {
 
-    if (!slides.length || !dots.length) return;
+                    if (!entry.isIntersecting) return;
 
-    const slideObserver = new IntersectionObserver(
+                    currentSlide =
+                        slides.indexOf(entry.target);
 
-        (entries) => {
+                    renderSidebar();
 
-            entries.forEach((entry) => {
+                });
 
-                if (!entry.isIntersecting) return;
+            },
 
-                const index = [...slides].indexOf(entry.target);
+            {
+                threshold: 0.55
+            }
 
-                dots.forEach((dot) =>
-                    dot.classList.remove("active")
-                );
-
-                if (dots[index]) {
-
-                    dots[index].classList.add("active");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.55
-        }
-
-    );
+        );
 
     slides.forEach((slide) => {
 
@@ -97,341 +96,420 @@ function initializeProgressBar() {
 
     });
 
-}
-
-/* ==========================================
-   END BUTTON
-   ========================================== */
-
-function initializeEndButton() {
-
-    const button = document.getElementById("endButton");
-
-    if (!button) return;
-
-    button.addEventListener("click", () => {
-
-        const closingSlide =
-            document.getElementById("closing");
-
-        if (!closingSlide) return;
-
-        closingSlide.scrollIntoView({
-
-            behavior: "smooth",
-            block: "start"
-
-        });
-
-    });
-
-}
-
-/* ==========================================
-   PARALLAX
-   ========================================== */
-
-function initializeParallaxEffects() {
-
-    const heroTitle =
-        document.querySelector(".hero h1");
-
-    const heroSecondary =
-        document.querySelector(".hero .secondary");
-
-    if (!heroTitle || !heroSecondary) return;
-
-    window.addEventListener("scroll", () => {
-
-        const scroll = window.scrollY;
-
-        if (scroll > 800) return;
-
-        heroTitle.style.transform =
-            `translateY(${scroll * 0.08}px)`;
-
-        heroSecondary.style.transform =
-            `translateY(${scroll * 0.12}px)`;
-
-        heroTitle.style.opacity =
-            1 - scroll / 1200;
-
-        heroSecondary.style.opacity =
-            1 - scroll / 1000;
-
-    });
-
-}
-
-/* ==========================================
-   HOVER LIFT CARDS
-   ========================================== */
-
-const cards = document.querySelectorAll(
-    ".card, .benchmark, .team-grid div"
-);
-
-cards.forEach((card) => {
-
-    card.addEventListener("mouseenter", () => {
-
-        card.style.transform =
-            "translateY(-10px)";
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-        card.style.transform =
-            "translateY(0px)";
-
-    });
-
-});
-
-/* ==========================================
-   ECOSYSTEM FLOATING MOTION
-   ========================================== */
-
-const nodes = document.querySelectorAll(".node");
-
-nodes.forEach((node, index) => {
-
-    let direction = 1;
-
-    setInterval(() => {
-
-        direction *= -1;
-
-        node.animate(
-            [
-                {
-                    transform:
-                        `translateY(0px)`
-                },
-                {
-                    transform:
-                        `translateY(${direction * 8}px)`
-                }
-            ],
-            {
-                duration:
-                    3500 + (index * 300),
-                fill: "forwards",
-                easing:
-                    "ease-in-out"
-            }
-        );
-
-    }, 3500 + (index * 300));
-
-});
-
-/* ==========================================
-   FRAMEWORK STAGGER
-   ========================================== */
-
-function staggerFramework() {
-
-    const items =
-        document.querySelectorAll(
-            ".framework div"
-        );
-
-    const observer =
-        new IntersectionObserver(
-
-            (entries) => {
-
-                entries.forEach((entry) => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        items.forEach(
-                            (item, index) => {
-
-                                setTimeout(() => {
-
-                                    item.style.opacity = 1;
-
-                                    item.style.transform =
-                                        "translateY(0px)";
-
-                                }, index * 200);
-
-                            }
-                        );
-
-                    }
-
-                });
-
-            },
-
-            {
-                threshold: 0.3
-            }
-
-        );
-
-    const framework =
-        document.querySelector(
-            ".framework"
-        );
-
-    if (framework) {
-
-        items.forEach((item) => {
-
-            item.style.opacity = 0;
-
-            item.style.transform =
-                "translateY(40px)";
-
-            item.style.transition =
-                "all .8s cubic-bezier(.22,1,.36,1)";
-
-        });
-
-        observer.observe(framework);
-
-    }
-
-}
-
-staggerFramework();
-
-/* ==========================================
-   ROADMAP ANIMATION
-   ========================================== */
-
-function animateRoadmap() {
-
-    const roadmap =
-        document.querySelector(".roadmap");
-
-    if (!roadmap) return;
-
-    const phases =
-        roadmap.querySelectorAll("div");
-
-    const observer =
-        new IntersectionObserver(
-
-            (entries) => {
-
-                entries.forEach((entry) => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        phases.forEach(
-                            (phase, index) => {
-
-                                setTimeout(() => {
-
-                                    phase.style.opacity = 1;
-
-                                    phase.style.transform =
-                                        "translateY(0px)";
-
-                                }, index * 250);
-
-                            }
-                        );
-
-                    }
-
-                });
-
-            },
-
-            {
-                threshold: 0.25
-            }
-
-        );
-
-    phases.forEach((phase) => {
-
-        phase.style.opacity = 0;
-
-        phase.style.transform =
-            "translateY(30px)";
-
-        phase.style.transition =
-            "all .8s cubic-bezier(.22,1,.36,1)";
-
-    });
-
-    observer.observe(roadmap);
-
-}
-
-animateRoadmap();
-
-/* ==========================================
-   KEYBOARD NAVIGATION
-   ========================================== */
-
-const slides =
-    document.querySelectorAll(".slide");
-
-let currentSlide = 0;
-
-document.addEventListener(
-    "keydown",
-    (event) => {
+    /* ==================================================
+       SIDEBAR PAGINATION
+       ================================================== */
+
+    function renderSidebar() {
+
+        pageWindow.innerHTML = "";
+
+        const totalSlides =
+            slides.length;
+
+        let start =
+            Math.max(
+                0,
+                currentSlide - 2
+            );
+
+        let end =
+            Math.min(
+                totalSlides,
+                start + 5
+            );
 
         if (
-            event.key === "ArrowDown"
+            end - start < 5 &&
+            totalSlides > 5
         ) {
 
-            currentSlide =
-                Math.min(
-                    currentSlide + 1,
-                    slides.length - 1
-                );
-
-            slides[currentSlide]
-                .scrollIntoView({
-
-                    behavior: "smooth"
-
-                });
-
-        }
-
-        if (
-            event.key === "ArrowUp"
-        ) {
-
-            currentSlide =
+            start =
                 Math.max(
-                    currentSlide - 1,
-                    0
+                    0,
+                    end - 5
                 );
 
-            slides[currentSlide]
-                .scrollIntoView({
+        }
 
-                    behavior: "smooth"
+        if (start > 0) {
 
-                });
+            ellipsisTop.classList.remove(
+                "hidden"
+            );
+
+        } else {
+
+            ellipsisTop.classList.add(
+                "hidden"
+            );
+
+        }
+
+        if (
+            end < totalSlides
+        ) {
+
+            ellipsisBottom.classList.remove(
+                "hidden"
+            );
+
+        } else {
+
+            ellipsisBottom.classList.add(
+                "hidden"
+            );
+
+        }
+
+        for (
+            let i = start;
+            i < end;
+            i++
+        ) {
+
+            const page =
+                document.createElement("div");
+
+            page.className =
+                "page-number";
+
+            page.textContent =
+                String(i + 1)
+                    .padStart(2, "0");
+
+            if (
+                i === currentSlide
+            ) {
+
+                page.classList.add(
+                    "active"
+                );
+
+            }
+
+            page.addEventListener(
+                "click",
+                () => {
+
+                    slides[i]
+                        .scrollIntoView({
+
+                            behavior:
+                                "smooth",
+
+                            block:
+                                "start"
+
+                        });
+
+                }
+            );
+
+            pageWindow.appendChild(
+                page
+            );
 
         }
 
     }
-);
 
-/* ==========================================
-   PERFORMANCE LOG
-   ========================================== */
+    renderSidebar();
 
-console.log(
-    "%cOutside Commercial Framework V1 Loaded",
-    "font-size:14px;color:#0F62FE;font-weight:bold;"
-);
+    /* ==================================================
+       TOP BUTTON
+       ================================================== */
+
+    topButton.addEventListener(
+        "click",
+        () => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+    );
+
+    /* ==================================================
+       END BUTTON
+       ================================================== */
+
+    endButton.addEventListener(
+        "click",
+        () => {
+
+            slides[
+                slides.length - 1
+            ].scrollIntoView({
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+    );
+
+    /* ==================================================
+       LIGHT / DARK THEME
+       ================================================== */
+
+    const savedTheme =
+        localStorage.getItem(
+            "outsideTheme"
+        );
+
+    if (savedTheme) {
+
+        document.body.classList.remove(
+            "theme-light",
+            "theme-dark"
+        );
+
+        document.body.classList.add(
+            savedTheme
+        );
+
+    }
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const darkActive =
+                document.body.classList.contains(
+                    "theme-dark"
+                );
+
+            document.body.classList.toggle(
+                "theme-dark"
+            );
+
+            document.body.classList.toggle(
+                "theme-light"
+            );
+
+            localStorage.setItem(
+
+                "outsideTheme",
+
+                darkActive
+                    ? "theme-light"
+                    : "theme-dark"
+            );
+
+        }
+    );
+
+    /* ==================================================
+       KEYBOARD NAVIGATION
+       ================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key ===
+                "ArrowDown"
+            ) {
+
+                const next =
+                    Math.min(
+                        currentSlide + 1,
+                        slides.length - 1
+                    );
+
+                slides[next]
+                    .scrollIntoView({
+
+                        behavior:
+                            "smooth"
+
+                    });
+
+            }
+
+            if (
+                event.key ===
+                "ArrowUp"
+            ) {
+
+                const prev =
+                    Math.max(
+                        currentSlide - 1,
+                        0
+                    );
+
+                slides[prev]
+                    .scrollIntoView({
+
+                        behavior:
+                            "smooth"
+
+                    });
+
+            }
+
+            if (
+                event.key.toLowerCase()
+                === "home"
+            ) {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            }
+
+            if (
+                event.key.toLowerCase()
+                === "end"
+            ) {
+
+                slides[
+                    slides.length - 1
+                ].scrollIntoView({
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            }
+
+        }
+    );
+
+    /* ==================================================
+       PARALLAX HERO
+       ================================================== */
+
+    const heroTitles =
+        document.querySelectorAll(
+            ".hero h1"
+        );
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            const scroll =
+                window.scrollY;
+
+            if (
+                scroll > 1200
+            ) return;
+
+            heroTitles.forEach(
+                (title, index) => {
+
+                    const speed =
+                        (index + 1) * 0.04;
+
+                    title.style.transform =
+                        `translateY(${scroll * speed}px)`;
+
+                }
+            );
+
+        }
+    );
+
+    /* ==================================================
+       ECOSYSTEM FLOAT
+       ================================================== */
+
+    const nodes =
+        document.querySelectorAll(
+            ".ecosystem-node"
+        );
+
+    nodes.forEach(
+
+        (node, index) => {
+
+            let direction = 1;
+
+            setInterval(() => {
+
+                direction *= -1;
+
+                node.animate(
+
+                    [
+
+                        {
+                            transform:
+                                `translateY(0px)`
+                        },
+
+                        {
+                            transform:
+                                `translateY(${direction * 8}px)`
+                        }
+
+                    ],
+
+                    {
+
+                        duration:
+                            3000 +
+                            (index * 250),
+
+                        fill:
+                            "forwards",
+
+                        easing:
+                            "ease-in-out"
+
+                    }
+
+                );
+
+            },
+
+            3000 +
+            (index * 250)
+
+            );
+
+        }
+
+    );
+
+    /* ==================================================
+       SMOOTH INITIAL LOAD
+       ================================================== */
+
+    requestAnimationFrame(
+        () => {
+
+            document.body.classList.add(
+                "loaded"
+            );
+
+        }
+    );
+
+    /* ==================================================
+       DEBUG
+       ================================================== */
+
+    console.log(
+        "%cOutside Commercial Framework V2",
+        "color:#BFB2EA;font-size:14px;font-weight:bold;"
+    );
+
+});
